@@ -7,6 +7,7 @@ import java.io.Serial;
 public class Mountain {
     @SerializedName("ID")
     public String id;
+    @SerializedName("name")
     public String name;
     public String type;
     public String company;
@@ -16,7 +17,28 @@ public class Mountain {
     public int meters;
     @SerializedName("cost")
     public int feet;
-    public Auxdata auxdata;
+
+    public Mountain(){
+        name="Namn: ";
+    }
+
+    public Mountain(String name){
+        this.name=name;
+    }
+
+    public String getTitle(){
+        return name;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String ToString(){
+        return name;
+    }
+
+
 
     /*{
     "ID": "mobilprog_kinnekulle",
@@ -27,8 +49,5 @@ public class Mountain {
     "category": "",
     "size": 306,
     "cost": 1004,
-    "auxdata": {
-      "wiki": "https://sv.wikipedia.org/wiki/Kinnekulle",
-      "img": ""
     }*/
 }
