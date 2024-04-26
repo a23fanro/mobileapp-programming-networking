@@ -3,8 +3,11 @@ package com.example.networking;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,20 +25,31 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     private RecyclerViewAdapter adapter;
     private Gson gson;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         new JsonFile(this, this).execute(JSON_FILE);
+        //new JsonTask(this).execute(JSON_URL);
+        //mountains.add(new Mountain("hej"));
 
-        mountains.add(new Mountain("Matterhorn"));
-        mountains.add(new Mountain("Mont Blanc"));
-        mountains.add(new Mountain("Denali"));
-        mountains.add(new Mountain("Kebnekaise"));
+        //Log.d("heeeej", "HEJ" + mountains.size());
 
+        for (Mountain m : mountains) {
+            Log.d("ngt", "HEJ" + m.toString());
+        }
 
+        adapter = new RecyclerViewAdapter(this, mountains, new RecyclerViewAdapter.OnClickListener() {
+            @Override
+            public void onClick(Mountain item) {
+                Toast.makeText(MainActivity.this, item.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        RecyclerView view = findViewById(R.id.recycler_view);
+        view.setLayoutManager(new LinearLayoutManager(this));
+        view.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -46,19 +60,17 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
         Gson gson = new Gson();
 
-        Type type = new TypeToken<List<Mountain>>() {}.getType();
-        List<Mountain> mountains = gson.fromJson(json, type);
+        Type type = new TypeToken<List<Mountain>>() {
+        }.getType();
+        ArrayList<Mountain> jsonMountain = gson.fromJson(json, type);
+        mountains.addAll(jsonMountain);
 
-        adapter.notifyDataSetChanged();
+        //mountains = gson.fromJson(json, type);
 
-        for (int i = 0; i < mountains.size(); i++){
+
+        for (int i = 0; i < mountains.size(); i++) {
             Log.d("HEJ", mountains.get(i).getName());
         }
+        //  adapter.notifyDataSetChanged();
     }
-
-
-
-    /**/
-
-
 }

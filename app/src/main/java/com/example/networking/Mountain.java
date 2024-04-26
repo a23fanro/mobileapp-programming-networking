@@ -1,8 +1,10 @@
 package com.example.networking;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serial;
+//import java.io.Serial;
 
 public class Mountain {
     @SerializedName("ID")
@@ -33,8 +35,9 @@ public class Mountain {
     public String getName(){
         return name;
     }
-
-    public String ToString(){
+@NonNull
+@Override
+    public String toString(){
         return name;
     }
 
